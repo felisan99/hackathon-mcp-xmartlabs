@@ -65,3 +65,8 @@ def obtener_gastos():
         datos_formateados.append(texto)
     
     return "\n".join(datos_formateados)
+
+def generar_csv():
+    service = get_service()
+    result = service.get(spreadsheetId=SPREADSHEET_ID, range=RANGE).execute()
+    return result.get("values", [])

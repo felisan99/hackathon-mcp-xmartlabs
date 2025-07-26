@@ -1,5 +1,7 @@
 from mcp.server.fastmcp import FastMCP
-from planilla import agregar_gasto, obtener_gastos, eliminar_gasto
+import csv
+import os
+from planilla import agregar_gasto, obtener_gastos, eliminar_gasto, generar_csv
 
 print("Starting MCP server...")
 
@@ -50,3 +52,18 @@ def eliminar_gasto_tool(articulo: str, fecha: str) -> str:
     """
     result = eliminar_gasto(articulo, fecha)
     return result
+
+@mcp.tool()
+def descargar_plantilla_tool() -> str:
+    """
+    Descarga la plantilla de gastos en formato CSV en la carpeta Descargas del usuario.
+    """
+    values = generar_csv()
+    downloads_path = os.path.join(os.path.expanduser("~"), "Downloads", "plantilla_gastos.csv")
+
+    with open(downloads_path, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        for row in values:
+            writer.writerow(row)
+    
+    return f"Plantilla descargada en {downloads_path}"
