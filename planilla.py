@@ -6,8 +6,6 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = '1nKHpZmHxqSv3ZggKS4t3bck3yvtbiRAU_psI3hEIKhc'
 RANGE = 'Hoja 1!A:E'
 
-CANT_COLUMNAS = 100
-
 def get_service():
     creds = service_account.Credentials.from_service_account_file(
         'credenciales.json', scopes=SCOPES)
@@ -52,8 +50,8 @@ def obtener_gastos():
     if not values:
         return "No hay gastos registrados."
 
-    titulos = values[0][0:CANT_COLUMNAS]
-    gastos = values[1:][0:CANT_COLUMNAS]
+    titulos = values[0]
+    gastos = values[1:]
 
     datos_formateados = []
 
